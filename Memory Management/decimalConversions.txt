@@ -1,0 +1,67 @@
+/* Author: Tim James
+ * CST-221
+ * Date: April 27, 2018
+ * Summary: This code takes a user defined number between 0 and 4095 and converts it to 
+ * binary format, hexadecimal format, and decimal format. 
+**/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+int main() {
+
+	int i, j, r, decimal, binary[20];
+	START: printf("Enter a decimal number 0 to 4095: "); // goto start position for if 
+	scanf("%d", &decimal); // gathering user data
+	int n = decimal;
+ 	char h[17] = "0123456789abcdef";
+	int num, quo, rem;
+	char hex[1024];
+	i = 0;
+	
+	// BINARY CONVERSION
+	// Checks to make sure entered number is within the specified range
+	if (n < 0 || n > 4095) { 
+		printf("Error: Please try again. Decimal Must be between 0 and 4095!\n");
+		goto START; // sends program to start position
+	}
+
+	// Converts the decimal into a binary number
+	while (decimal > 0) {
+		r = decimal % 2;
+		binary [i] = r;
+		decimal = decimal / 2;
+		i++;
+	}
+
+	printf("\n%d converted to binary format is: ", n);
+	
+	// Prints binary number
+	for (j = i - 1; j >= 0; j--) {
+		printf("%d", binary[j]);
+	}
+	printf("\n");
+
+	// HEXADECIMAL CONVERSION
+	num = n;
+	hex[0] = '\0';
+
+	// Converts the number into hexadecimal
+	while (num != 0) {
+		quo = num / 16;
+		rem = num % 16;
+
+		memmove( &hex[1], hex, strlen(hex) + 1);
+
+		hex[0] = h[rem];
+
+		num = quo;
+	}
+	
+	printf("%d converted to hexadecimal format is: 0x%s\n", n, hex);
+	printf("%d in decimal format is: %d\n\n", n, n);
+	
+	return 0;
+}
